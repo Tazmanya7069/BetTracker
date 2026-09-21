@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BetTracker — Suivi de paris</title>
+<style>
+:root{--bg:#06101b;--panel:#0d1b29;--panel2:#102437;--line:#20384d;--text:#eef6ff;--muted:#8fa7bc;--green:#20e29a;--red:#ff5c66;--purple:#a970ff;--blue:#4d9dff;--yellow:#ffd166}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,Segoe UI,Arial,sans-serif;background:radial-gradient(circle at 30% 0,#10283a 0,#06101b 42%,#040b12 100%);color:var(--text)}
+button,input,select{font:inherit}.app{display:grid;grid-template-columns:245px 1fr;min-height:100vh}.side{border-right:1px solid var(--line);padding:20px 16px;background:#07131f;display:flex;flex-direction:column}.brand{font-size:26px;font-weight:800;margin:4px 8px 22px}.brand span{color:var(--green)}.tag{font-size:10px;color:var(--muted);letter-spacing:2px}.add{width:100%;border:0;border-radius:10px;background:var(--green);padding:13px;font-weight:800;cursor:pointer;color:#052016}.nav{margin-top:18px}.nav button{width:100%;padding:12px 14px;margin:3px 0;border:0;border-radius:9px;background:transparent;color:var(--text);text-align:left;cursor:pointer}.nav button:hover,.nav button.active{background:#10263a}.bank{margin-top:auto;padding:18px;border:1px solid var(--line);border-radius:12px;background:#0a1825}.bank b{display:block;font-size:26px;color:var(--green);margin-top:6px}.main{padding:22px;max-width:1500px;width:100%;margin:auto}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.top h1{margin:0;font-size:22px}.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.card,.category,.section{background:linear-gradient(145deg,#0d1d2c,#0a1724);border:1px solid var(--line);border-radius:12px}.card{padding:18px}.label{color:var(--muted);font-size:13px}.value{font-size:25px;font-weight:800;margin-top:5px}.positive{color:var(--green)}.negative{color:var(--red)}.cats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:14px}.category{padding:18px;cursor:pointer;transition:.15s}.category:hover{transform:translateY(-2px)}.category h3{margin:0 0 8px}.category p{margin:3px 0;color:var(--muted)}.safe{border-color:#1de39a}.mart{border-color:#ff5360}.fun{border-color:#a970ff}.other{border-color:#4d9dff}.two{display:grid;grid-template-columns:1fr 1.25fr;gap:14px;margin-top:14px}.section{padding:18px}.drop{border:1px dashed #3c6280;border-radius:10px;padding:30px;text-align:center;color:var(--muted);cursor:pointer;display:block}.drop strong{display:block;color:var(--text);font-size:16px;margin-bottom:8px}.drop input{display:none}.btn{margin-top:12px;border:0;border-radius:8px;padding:10px 14px;background:#12355a;color:white;cursor:pointer}.btn.primary{background:var(--green);color:#052016;font-weight:800}.btn.danger{background:#4b1a21}.table{width:100%;border-collapse:collapse;margin-top:12px}.table th,.table td{padding:10px 8px;border-bottom:1px solid #193247;text-align:left;font-size:13px}.pill{padding:4px 8px;border-radius:999px;font-size:11px;font-weight:800}.pill.safe{background:#0b4a38;color:#64f0bc}.pill.mart{background:#4a1820;color:#ff8b91}.pill.fun{background:#3d245e;color:#d1a9ff}.pill.other{background:#153b5e;color:#86bdff}.result{font-weight:800}.bottom{display:grid;grid-template-columns:1.7fr 1fr;gap:14px;margin-top:14px}.chart{height:210px;display:flex;align-items:end;gap:5px;padding:15px 8px 5px}.bar{flex:1;background:linear-gradient(#22e29a,#146f55);border-radius:4px 4px 0 0;min-height:8px}.stats p{display:flex;justify-content:space-between;border-bottom:1px solid #193247;padding-bottom:10px}.modal{position:fixed;inset:0;background:#000b;display:none;align-items:center;justify-content:center;padding:20px;z-index:10}.modal.show{display:flex}.modalbox{width:min(560px,100%);max-height:90vh;overflow:auto;background:#0d1d2c;border:1px solid var(--line);border-radius:14px;padding:22px}.modalbox h2{margin-top:0}.form{display:grid;gap:10px}.form input,.form select{background:#081522;color:var(--text);border:1px solid var(--line);border-radius:8px;padding:11px}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.actions{display:flex;gap:10px;justify-content:flex-end;margin-top:15px}.secondary{background:#16283a}.preview{max-width:100%;max-height:240px;margin-top:12px;border-radius:8px;display:none}.martbox{display:none;padding:12px;border:1px solid #3b2530;border-radius:9px;background:#170f15}.martbox.show{display:block}.small{font-size:12px;color:var(--muted)}.toolbar{display:flex;gap:8px;flex-wrap:wrap}.toolbar select{background:#081522;color:var(--text);border:1px solid var(--line);border-radius:8px;padding:9px}.selectionsBox{display:none;margin-top:10px;padding:12px;border:1px solid #29465f;border-radius:9px;background:#081522}.selectionsBox.show{display:block}.selectionRow{display:grid;grid-template-columns:1fr 100px;gap:8px;margin-top:7px}.selectionRow input{background:#0b1b29;color:var(--text);border:1px solid var(--line);border-radius:7px;padding:9px}.ticketSummary{margin-top:10px;padding:10px;border-radius:8px;background:#0b1a28;color:var(--muted)}.notice{padding:10px 12px;border:1px solid #334d64;background:#0b1a28;border-radius:9px;color:var(--muted);font-size:12px;margin-top:10px}
+@media(max-width:1000px){.app{grid-template-columns:1fr}.side{display:none}.grid4,.cats{grid-template-columns:1fr 1fr}.two,.bottom{grid-template-columns:1fr}}
+@media(max-width:600px){.main{padding:12px}.grid4,.cats{grid-template-columns:1fr}.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="side">
+<div class="brand">📈 Bet<span>Tracker</span><div class="tag">SUIVI · ANALYSE · PROGRESSION</div></div>
+<button class="add" onclick="openModal()">＋ Ajouter un pari</button>
+<div class="nav">
+<button class="active" onclick="showDashboard(this)">▦ Tableau de bord</button>
+<button onclick="openAllBets(this)">▣ Mes paris</button>
+<button onclick="openStats(this)">▥ Statistiques</button>
+<button onclick="openCategories(this)">▦ Catégories</button>
+<button onclick="openCategory('Martingale',this)">↗ Martingale</button>
+<button onclick="openCategory('Safe',this)">◈ Safe</button>
+<button onclick="openCategory('Fun',this)">♣ Fun</button>
+</div>
+<div class="bank">Bankroll actuelle<b id="bankroll">0,00 €</b><span id="month" class="positive">Calcul automatique</span></div>
+</aside>
+<main class="main">
+<div id="statsView" style="display:none">
+  <div class="top"><h1>▥ Statistiques</h1><button class="btn secondary" onclick="showDashboard()">← Retour au tableau de bord</button></div>
+  <div class="grid4">
+    <div class="card"><div class="label">Paris total</div><div class="value" id="stCount">0</div></div>
+    <div class="card"><div class="label">Bénéfice</div><div class="value" id="stProfit">0,00 €</div></div>
+    <div class="card"><div class="label">ROI</div><div class="value" id="stRoi">0 %</div></div>
+    <div class="card"><div class="label">Réussite</div><div class="value" id="stRate">0 %</div></div>
+  </div>
+  <div class="two">
+    <section class="section"><h2>Résultats par catégorie</h2><table class="table"><thead><tr><th>Catégorie</th><th>Paris</th><th>Réussite</th><th>Bénéfice</th><th>ROI</th></tr></thead><tbody id="statsCats"></tbody></table></section>
+    <section class="section stats"><h2>Bilan</h2><p>Mises totales <b id="stStakes">0,00 €</b></p><p>Paris gagnés <b id="stWins">0</b></p><p>Paris perdus <b id="stLosses">0</b></p><p>Paris en attente <b id="stPending">0</b></p></section>
+  </div>
+</div>
+<div id="categoriesView" style="display:none">
+  <div class="top"><h1>▦ Catégories</h1><button class="btn secondary" onclick="showDashboard()">← Retour au tableau de bord</button></div>
+  <div class="cats">
+    <div class="category safe" onclick="openCategory('Safe')"><h3>🛡️ Safe</h3><p>Paris prudents</p><p id="catSafeInfo">0 paris</p></div>
+    <div class="category mart" onclick="openCategory('Martingale')"><h3>📈 Martingale</h3><p>Séries P1, P2, P3…</p><p id="catMartInfo">0 paris</p></div>
+    <div class="category fun" onclick="openCategory('Fun')"><h3>🎮 Fun</h3><p>Paris plaisir</p><p id="catFunInfo">0 paris</p></div>
+    <div class="category other" onclick="openCategory('Autres')"><h3>☷ Autres</h3><p>Tout le reste</p><p id="catOtherInfo">0 paris</p></div>
+  </div>
+  <div class="notice">Cette page sert à choisir rapidement une catégorie. En cliquant dessus, tu ouvres uniquement les paris de cette catégorie.</div>
+</div>
+<div id="allBetsView" style="display:none">
+  <div class="top">
+    <h1>▣ Mes paris</h1>
+    <button class="btn secondary" onclick="showDashboard()">← Retour au tableau de bord</button>
+  </div>
+  <div class="grid4">
+    <div class="card"><div class="label">Tous les paris</div><div class="value" id="abCount">0</div></div>
+    <div class="card"><div class="label">Bénéfice</div><div class="value" id="abProfit">0,00 €</div></div>
+    <div class="card"><div class="label">ROI</div><div class="value" id="abRoi">0 %</div></div>
+    <div class="card"><div class="label">Réussite</div><div class="value" id="abRate">0 %</div></div>
+  </div>
+  <section class="section" style="margin-top:14px">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap">
+      <h2>Historique de tous mes paris</h2>
+      <select id="allBetsFilter" onchange="renderAllBets()" style="background:#081522;color:var(--text);border:1px solid var(--line);border-radius:8px;padding:9px">
+        <option>Tous</option><option>Safe</option><option>Martingale</option><option>Fun</option><option>Autres</option>
+      </select>
+    </div>
+    <table class="table">
+      <thead><tr><th>Date</th><th>Pari</th><th>Cote</th><th>Mise</th><th>Catégorie</th><th>Niveau</th><th>Résultat</th><th>Gain/Perte</th></tr></thead>
+      <tbody id="allBetsBody"></tbody>
+    </table>
+  </section>
+</div>
+<div id="categoryView" style="display:none">
+  <div class="top">
+    <h1 id="categoryTitle">🎮 Fun</h1>
+    <button class="btn secondary" onclick="showDashboard()">← Retour au tableau de bord</button>
+  </div>
+  <div class="grid4">
+    <div class="card"><div class="label">Paris</div><div class="value" id="cvCount">0</div></div>
+    <div class="card"><div class="label">Bénéfice</div><div class="value" id="cvProfit">0,00 €</div></div>
+    <div class="card"><div class="label">ROI</div><div class="value" id="cvRoi">0 %</div></div>
+    <div class="card"><div class="label">Réussite</div><div class="value" id="cvRate">0 %</div></div>
+  </div>
+  <section class="section" style="margin-top:14px">
+    <h2 id="cvHeading">Paris Fun</h2>
+    <table class="table">
+      <thead><tr><th>Date</th><th>Pari</th><th>Cote</th><th>Niveau</th><th>Résultat</th><th>Gain/Perte</th></tr></thead>
+      <tbody id="categoryBets"></tbody>
+    </table>
+  </section>
+</div>
+<div id="dashboardView">
+<div class="top"><h1>Tableau de bord</h1><div class="toolbar"><select id="quickFilter" onchange="setFilter(this.value)"><option>Tous</option><option>Safe</option><option>Martingale</option><option>Fun</option><option>Autres</option></select></div></div>
+<div class="grid4">
+<div class="card"><div class="label">Paris total</div><div class="value" id="total">0</div></div>
+<div class="card"><div class="label">Bénéfice</div><div class="value" id="gains">0,00 €</div></div>
+<div class="card"><div class="label">ROI</div><div class="value" id="roi">0 %</div></div>
+<div class="card"><div class="label">Taux de réussite</div><div class="value" id="rate">0 %</div></div>
+</div>
+<div class="cats">
+<div class="category safe" onclick="openCategory('Safe')"><h3>🛡️ Safe</h3><p id="safeCount">0 paris</p><p id="safePnl">0,00 €</p></div>
+<div class="category mart" onclick="openCategory('Martingale')"><h3>📈 Martingale</h3><p id="martCount">0 paris</p><p id="martPnl">0,00 €</p></div>
+<div class="category fun" onclick="openCategory('Fun')"><h3>🎮 Fun</h3><p id="funCount">0 paris</p><p id="funPnl">0,00 €</p></div>
+<div class="category other" onclick="openCategory('Autres')"><h3>☷ Autres</h3><p id="otherCount">0 paris</p><p id="otherPnl">0,00 €</p></div>
+</div>
+<div class="two">
+<section class="section"><h2>📸 Importer une capture</h2><label class="drop"><input id="shot" type="file" accept="image/*" onchange="preview(event)"><strong>⇧ Glisse ta capture ici</strong>ou clique pour sélectionner<br><small>Betclic, Winamax, etc.</small><img id="preview" class="preview"></label><button class="btn primary" onclick="analyzeShot()">✦ Analyser la capture</button><div id="ocrStatus" class="notice">L'analyse OCR se fait dans ton navigateur. La capture n'est pas envoyée à un serveur BetTracker.</div><div id="ocrText" class="notice" style="display:none;white-space:pre-wrap;max-height:180px;overflow:auto"></div></section>
+<section class="section"><div style="display:flex;justify-content:space-between;align-items:center"><h2>Derniers paris</h2><button class="btn danger" onclick="clearAll()">Effacer les données</button></div><table class="table"><thead><tr><th>Date</th><th>Pari</th><th>Cote</th><th>Catégorie</th><th>Niveau</th><th>Résultat</th><th>Gain/Perte</th></tr></thead><tbody id="bets"></tbody></table></section>
+</div>
+<div class="bottom">
+<section class="section"><h2>Évolution de la bankroll</h2><div class="chart" id="chart"></div></section>
+<section class="section stats"><h2>Statistiques</h2><p>Mises totales <b id="stakes">0,00 €</b></p><p>Gains/pertes <b id="profit">0,00 €</b></p><p>Paris gagnés <b id="wins">0</b></p><p>Paris perdus <b id="losses">0</b></p><p>ROI <b id="roi2">0 %</b></p></section>
+</div>
+</div>
+</main>
+</div>
+<div class="modal" id="modal"><div class="modalbox"><h2>Ajouter un pari</h2><div class="form">
+<input id="betName" placeholder="Pronostic / marché (ex. Paris SG)"><div id="selectionsBox" class="selectionsBox"><b>🎯 Sélections détectées</b><div id="selectionsList"></div><div id="ticketSummary" class="ticketSummary"></div></div>
+<select id="bookmaker"><option>Auto-détection</option><option>Betclic</option><option>Winamax</option><option>Unibet</option><option>Parions Sport</option><option>PMU</option><option>Bwin</option><option>Vbet</option><option>Bet365</option><option>Autre</option></select>
+<div class="row"><input id="odd" type="number" step="0.01" placeholder="Cote"><input id="stake" type="number" step="0.01" placeholder="Mise €"></div>
+<select id="cat" onchange="toggleMart()"><option>Safe</option><option>Martingale</option><option>Fun</option><option>Autres</option></select>
+<div id="martbox" class="martbox"><div class="row"><input id="series" placeholder="N° série (ex. 51)"><input id="level" placeholder="Niveau (P1, P2...)"></div><div class="small">Le niveau est mémorisé pour suivre les paliers de la série.</div></div>
+<select id="res"><option>Gagné</option><option>Perdu</option><option>En attente</option></select>
+</div><div class="actions"><button class="btn secondary" onclick="closeModal()">Annuler</button><button class="btn primary" onclick="addBet()">Ajouter</button></div></div></div>
+<script>
+const KEY='bettracker-v3';
+// Version vierge : aucun pari de démonstration.
+let data=JSON.parse(localStorage.getItem(KEY)||'[]');
+let current='Tous';
+function save(){localStorage.setItem(KEY,JSON.stringify(data))}
+function money(n){return (n||0).toLocaleString('fr-FR',{minimumFractionDigits:2,maximumFractionDigits:2})+' €'}
+function pnl(x){if(x.win===true)return x.stake*(x.odd-1);if(x.win===false)return -x.stake;return 0}
+function stats(arr=data){let stakes=arr.reduce((s,x)=>s+Number(x.stake||0),0),profit=arr.reduce((s,x)=>s+pnl(x),0),wins=arr.filter(x=>x.win===true).length,losses=arr.filter(x=>x.win===false).length,decided=wins+losses;return {stakes,profit,wins,losses,rate:decided?wins/decided*100:0,roi:stakes?profit/stakes*100:0}}
+function updateCards(){let s=stats(data);document.getElementById('total').textContent=data.length;document.getElementById('gains').textContent=(s.profit>=0?'+ ':'')+money(s.profit);document.getElementById('gains').className='value '+(s.profit>=0?'positive':'negative');document.getElementById('roi').textContent=(s.roi>=0?'+ ':'')+s.roi.toFixed(1)+' %';document.getElementById('rate').textContent=s.rate.toFixed(0)+' %';document.getElementById('stakes').textContent=money(s.stakes);document.getElementById('profit').textContent=money(s.profit);document.getElementById('wins').textContent=s.wins;document.getElementById('losses').textContent=s.losses;document.getElementById('roi2').textContent=s.roi.toFixed(1)+' %';document.getElementById('bankroll').textContent=money(s.profit);renderCats();renderChart()}
+function renderCats(){[['Safe','safe'],['Martingale','mart'],['Fun','fun'],['Autres','other']].forEach(([c,id])=>{let a=data.filter(x=>x.cat===c),s=stats(a);document.getElementById(id+'Count').textContent=a.length+' paris · '+s.rate.toFixed(0)+' %';let e=document.getElementById(id+'Pnl');e.textContent=(s.profit>=0?'+ ':'− ')+money(Math.abs(s.profit));e.className=s.profit>=0?'positive':'negative'})}
+function render(){let body=document.getElementById('bets');body.innerHTML='';data.filter(x=>current==='Tous'||x.cat===current).slice(0,50).forEach(x=>{let p=pnl(x);let cls=x.cat==='Safe'?'safe':x.cat==='Martingale'?'mart':x.cat==='Fun'?'fun':'other';body.innerHTML+=`<tr><td>${x.date}</td><td>${escapeHtml(x.selections?.length ? x.selections.map(s=>s.name).join(' + ') : x.name)}</td><td>${Number(x.odd).toFixed(2)}</td><td><span class="pill ${cls}">${x.cat}</span></td><td>${x.level||'—'}${x.series?' · #'+x.series:''}</td><td class="result ${x.win===true?'positive':x.win===false?'negative':''}">${x.win===true?'✓':x.win===false?'✕':'…'}</td><td class="${p>=0?'positive':'negative'}">${p>=0?'+':''}${money(p)}</td></tr>`});updateCards()}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function renderChart(){let c=document.getElementById('chart');c.innerHTML='';let v=0,vals=data.slice().reverse().map(x=>v+=pnl(x));if(!vals.length)vals=[0];let min=Math.min(0,...vals),max=Math.max(1,...vals),range=max-min||1;vals.forEach(x=>{let h=10+(x-min)/range*180;c.innerHTML+=`<div class="bar" title="${money(x)}" style="height:${h}px"></div>`})}
+function setFilter(c,el){current=c;document.getElementById('quickFilter').value=c;if(el){document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));el.classList.add('active')}render()}
+function hideViews(){
+  document.getElementById('dashboardView').style.display='none';
+  document.getElementById('categoryView').style.display='none';
+  document.getElementById('allBetsView').style.display='none';
+  document.getElementById('statsView').style.display='none';
+  document.getElementById('categoriesView').style.display='none';
+}
+function navActive(el){document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));if(el)el.classList.add('active')}
+function openStats(el){
+  hideViews(); document.getElementById('statsView').style.display='block'; navActive(el);
+  const s=stats(data);
+  document.getElementById('stCount').textContent=data.length;
+  const p=document.getElementById('stProfit'); p.textContent=(s.profit>=0?'+ ':'− ')+money(Math.abs(s.profit)); p.className='value '+(s.profit>=0?'positive':'negative');
+  document.getElementById('stRoi').textContent=(s.roi>=0?'+ ':'')+s.roi.toFixed(1)+' %';
+  document.getElementById('stRate').textContent=s.rate.toFixed(0)+' %';
+  document.getElementById('stStakes').textContent=money(s.stakes); document.getElementById('stWins').textContent=s.wins; document.getElementById('stLosses').textContent=s.losses; document.getElementById('stPending').textContent=data.filter(x=>x.win===null).length;
+  const body=document.getElementById('statsCats'); body.innerHTML='';
+  ['Safe','Martingale','Fun','Autres'].forEach(c=>{let a=data.filter(x=>x.cat===c),z=stats(a);body.innerHTML+=`<tr><td>${c}</td><td>${a.length}</td><td>${z.rate.toFixed(0)} %</td><td class="${z.profit>=0?'positive':'negative'}">${z.profit>=0?'+':''}${money(z.profit)}</td><td>${z.roi.toFixed(1)} %</td></tr>`});
+}
+function openCategories(el){
+  hideViews(); document.getElementById('categoriesView').style.display='block'; navActive(el);
+  [['Safe','catSafeInfo'],['Martingale','catMartInfo'],['Fun','catFunInfo'],['Autres','catOtherInfo']].forEach(([c,id])=>{let a=data.filter(x=>x.cat===c),z=stats(a);document.getElementById(id).textContent=`${a.length} paris · ${z.rate.toFixed(0)} % · ${z.profit>=0?'+':''}${money(z.profit)}`});
+}
+function openAllBets(el){
+  document.getElementById('dashboardView').style.display='none';
+  document.getElementById('categoryView').style.display='none';
+  document.getElementById('allBetsView').style.display='block';
+  document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));
+  if(el) el.classList.add('active');
+  renderAllBets();
+}
+function renderAllBets(){
+  const filter=document.getElementById('allBetsFilter').value;
+  const arr=data.filter(x=>filter==='Tous'||x.cat===filter);
+  const s=stats(arr);
+  document.getElementById('abCount').textContent=arr.length;
+  const p=document.getElementById('abProfit');
+  p.textContent=(s.profit>=0?'+ ':'− ')+money(Math.abs(s.profit));
+  p.className='value '+(s.profit>=0?'positive':'negative');
+  document.getElementById('abRoi').textContent=(s.roi>=0?'+ ':'')+s.roi.toFixed(1)+' %';
+  document.getElementById('abRate').textContent=s.rate.toFixed(0)+' %';
+  const body=document.getElementById('allBetsBody'); body.innerHTML='';
+  arr.forEach(x=>{
+    const z=pnl(x), cls=x.cat==='Safe'?'safe':x.cat==='Martingale'?'mart':x.cat==='Fun'?'fun':'other';
+    body.innerHTML+=`<tr><td>${x.date}</td><td>${escapeHtml(x.selections?.length ? x.selections.map(s=>s.name).join(' + ') : x.name)}</td><td>${Number(x.odd).toFixed(2)}</td><td>${money(x.stake)}</td><td><span class="pill ${cls}">${x.cat}</span></td><td>${x.level||'—'}${x.series?' · #'+x.series:''}</td><td class="result ${x.win===true?'positive':x.win===false?'negative':''}">${x.win===true?'✓':x.win===false?'✕':'…'}</td><td class="${z>=0?'positive':'negative'}">${z>=0?'+':''}${money(z)}</td></tr>`;
+  });
+}
+function showDashboard(el){
+  current='Tous';
+  document.getElementById('dashboardView').style.display='block';
+  document.getElementById('categoryView').style.display='none';
+  document.getElementById('allBetsView').style.display='none';
+  document.getElementById('statsView').style.display='none';
+  document.getElementById('categoriesView').style.display='none';
+  if(el){document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));el.classList.add('active')}
+  render();
+}
+function openCategory(cat,el){
+  current=cat;
+  document.getElementById('dashboardView').style.display='none';
+  document.getElementById('categoryView').style.display='block';
+  document.getElementById('allBetsView').style.display='none';
+  document.getElementById('statsView').style.display='none';
+  document.getElementById('categoriesView').style.display='none';
+  const icons={Safe:'🛡️',Martingale:'📈',Fun:'🎮',Autres:'☷'};
+  document.getElementById('categoryTitle').textContent=(icons[cat]||'☷')+' '+cat;
+  document.getElementById('cvHeading').textContent='Paris '+cat;
+  if(el){document.querySelectorAll('.nav button').forEach(x=>x.classList.remove('active'));el.classList.add('active')}
+  const arr=data.filter(x=>x.cat===cat), s=stats(arr);
+  document.getElementById('cvCount').textContent=arr.length;
+  const p=document.getElementById('cvProfit'); p.textContent=(s.profit>=0?'+ ':'− ')+money(Math.abs(s.profit)); p.className='value '+(s.profit>=0?'positive':'negative');
+  document.getElementById('cvRoi').textContent=(s.roi>=0?'+ ':'')+s.roi.toFixed(1)+' %';
+  document.getElementById('cvRate').textContent=s.rate.toFixed(0)+' %';
+  const body=document.getElementById('categoryBets'); body.innerHTML='';
+  arr.forEach(x=>{const z=pnl(x);body.innerHTML+=`<tr><td>${x.date}</td><td>${escapeHtml(x.selections?.length ? x.selections.map(s=>s.name).join(' + ') : x.name)}</td><td>${Number(x.odd).toFixed(2)}</td><td>${x.level||'—'}${x.series?' · #'+x.series:''}</td><td class="result ${x.win===true?'positive':x.win===false?'negative':''}">${x.win===true?'✓':x.win===false?'✕':'…'}</td><td class="${z>=0?'positive':'negative'}">${z>=0?'+':''}${money(z)}</td></tr>`});
+}
+function openModal(defaultCat){document.getElementById('modal').classList.add('show');if(defaultCat){document.getElementById('cat').value=defaultCat;toggleMart()}}
+function closeModal(){document.getElementById('modal').classList.remove('show')}
+function toggleMart(){document.getElementById('martbox').classList.toggle('show',document.getElementById('cat').value==='Martingale')}
+function addBet(){
+  let name=document.getElementById('betName').value.trim();
+  let odd=Number(document.getElementById('odd').value),stake=Number(document.getElementById('stake').value),cat=document.getElementById('cat').value,res=document.getElementById('res').value,bookmaker=document.getElementById('bookmaker').value;
+  if(!name||!odd||!stake){alert('Renseigne le pronostic, la cote et la mise.');return}
+  const selections=[...document.querySelectorAll('#selectionsList .selectionRow')].map(r=>({name:r.querySelector('.selName')?.value.trim()||'',odd:Number(r.querySelector('.selOdd')?.value||0)})).filter(x=>x.name);
+  data.unshift({date:new Date().toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit'}),name,odd,stake,cat,bookmaker:bookmaker==='Auto-détection'?'':bookmaker,level:cat==='Martingale'?document.getElementById('level').value.trim():'',series:cat==='Martingale'?document.getElementById('series').value.trim():'',win:res==='Gagné'?true:res==='Perdu'?false:null,selections});
+  save();closeModal();
+  document.getElementById('betName').value='';document.getElementById('bookmaker').value='Auto-détection';document.getElementById('odd').value='';document.getElementById('stake').value='';document.getElementById('series').value='';document.getElementById('level').value='';document.getElementById('shot').value='';document.getElementById('preview').style.display='none';document.getElementById('ocrText').style.display='none';document.getElementById('selectionsBox').classList.remove('show');document.getElementById('selectionsList').innerHTML='';document.getElementById('ticketSummary').textContent='';document.getElementById('ocrStatus').textContent='L’analyse OCR se fait dans ton navigateur. La capture n’est pas envoyée à un serveur BetTracker.';render()
+}
+function preview(e){let f=e.target.files[0];if(!f)return;let p=document.getElementById('preview');p.src=URL.createObjectURL(f);p.style.display='block'}
+async function analyzeShot(){
+  const file=document.getElementById('shot').files[0], status=document.getElementById('ocrStatus'), out=document.getElementById('ocrText');
+  if(!file){alert('Choisis d’abord une capture.');return}
+  status.style.display='block';out.style.display='block';out.textContent='Chargement du moteur OCR…';
+  try{
+    if(!window.Tesseract){await new Promise((resolve,reject)=>{const sc=document.createElement('script');sc.src='https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js';sc.onload=resolve;sc.onerror=reject;document.head.appendChild(sc)})}
+    const img=await loadImage(file), runs=[];
+    // Plusieurs passes améliorent les tickets longs et les textes sur fond sombre.
+    const configs=[{scale:2.4,gray:true},{scale:2.4,gray:false}];
+    for(let ri=0;ri<configs.length;ri++){
+      status.textContent='Préparation OCR '+(ri+1)+'/2…';
+      const cfg=configs[ri], canvas=document.createElement('canvas');
+      const scale=Math.min(cfg.scale,2400/Math.max(img.width,img.height)); canvas.width=Math.round(img.width*scale);canvas.height=Math.round(img.height*scale);
+      const ctx=canvas.getContext('2d',{willReadFrequently:true});ctx.drawImage(img,0,0,canvas.width,canvas.height);
+      if(cfg.gray){const px=ctx.getImageData(0,0,canvas.width,canvas.height),d=px.data;for(let i=0;i<d.length;i+=4){const g=0.299*d[i]+0.587*d[i+1]+0.114*d[i+2];const v=g<145?Math.max(0,g*0.62):Math.min(255,g*1.15);d[i]=d[i+1]=d[i+2]=v}ctx.putImageData(px,0,0)}
+      status.textContent='Analyse OCR '+(ri+1)+'/2…';
+      const result=await Tesseract.recognize(canvas,'fra+eng',{logger:m=>{if(m.status==='recognizing text')status.textContent='OCR '+(ri+1)+'/2 : '+Math.round((m.progress||0)*100)+' %'}});
+      runs.push(result.data.text||'');
+    }
+    const raw=runs.sort((a,b)=>b.length-a.length)[0]||''; const text=cleanOcr(raw); out.textContent=text||'Aucun texte lisible détecté.';
+    const lower=text.toLowerCase();
+    const bookmakerRules=[['Betclic',/\bbetclic\b/i],['Winamax',/\bwinamax\b/i],['Unibet',/\bunibet\b/i],['Parions Sport',/parions\s*sport|fdj\s*parions/i],['PMU',/\bpmu\b/i],['Bwin',/\bbwin\b/i],['Vbet',/\bvbet\b/i],['Bet365',/bet\s*365|bet365/i]];
+    const detectedBookmaker=(bookmakerRules.find(r=>r[1].test(text))||[])[0]||''; if(detectedBookmaker)document.getElementById('bookmaker').value=detectedBookmaker;
+    const nums=text.match(/(?:\d{1,3}(?:[ .]\d{3})*[.,]\d{2}|\d{1,6}[.,]\d{2})/g)||[], toNum=v=>Number(String(v).replace(/[ .](?=\d{3}[.,])/g,'').replace(',','.'));
+    const moneyAfter=(label)=>{const re=new RegExp(label+'\\s*[:=]?\\s*([0-9]{1,3}(?:[ .][0-9]{3})*[.,][0-9]{2})','i');const m=text.match(re);return m?toNum(m[1]):null};
+    const stakeValue=moneyAfter('(?:mise|stake|mise\\s+totale|montant)');
+    const gainValue=moneyAfter('(?:gains?\\s+potentiels?|gains?\\s+possibles?|gain\\s+potentiel|payout|retour(?:\\s+potentiel)?|total\\s+retour)');
+    const totalOdd=moneyAfter('(?:cote\\s+totale|total\\s+cote|cote\\s+du\\s+combin[ée])');
+    const oddCandidates=nums.map(toNum).filter(x=>x>=1.01&&x<=100);
+    const genericOdd=text.match(/(?:cote|odds|odd)\s*[:=]?\s*(\d{1,3}[.,]\d{2})/i); const oddValue=genericOdd?toNum(genericOdd[1]):null;
+    const dateMatch=text.match(/(\d{1,2}[\/-]\d{1,2}[\/-]\d{2,4})/);
+    const levelMatch=text.match(/\bP\s*([1-9]\d*)\b/i), seriesMatch=text.match(/(?:s[ée]rie|serie|n[°o]|#)\s*[:#-]?\s*(\d{1,4})/i);
+    const resultMatch=text.match(/\b(gagn[ée]e?|perdu(?:e)?|won|lost|settled|en\s+attente|pending)\b/i);
+    if(totalOdd!==null)document.getElementById('odd').value=totalOdd.toFixed(2); else if(oddValue!==null)document.getElementById('odd').value=oddValue.toFixed(2); else if(oddCandidates.length)document.getElementById('odd').value=oddCandidates[0].toFixed(2);
+    if(stakeValue!==null)document.getElementById('stake').value=stakeValue.toFixed(2);
+    if(resultMatch){const r=resultMatch[1].toLowerCase();document.getElementById('res').value=/gagn|won|settled/.test(r)?'Gagné':/perdu|lost/.test(r)?'Perdu':'En attente'}
+    if(levelMatch)document.getElementById('level').value='P'+levelMatch[1]; if(seriesMatch)document.getElementById('series').value=seriesMatch[1];
+
+    // Détection des sélections : une ligne courte de nom suivie du marché, puis d'une cote.
+    const lines=text.split(/\n+/).map(x=>x.trim()).filter(Boolean);
+    const bad=/^(simple|multiple|combin[ée]|gagn[ée]e?|won|lost|mise|stake|gains?|gain|payout|retour|cote|cote totale|cash\s*out|cashout|disponibles|compl[eé]ter mon pari|partager|aujourd'hui|aujourd’hui|hier|betclic|winamax|unibet|pmu|bwin|vbet|bet365|parions sport|suivi|paris? sportifs?|mes paris|bettracker|gouvernement)$/i;
+    const noise=/(https?:|www\.|bettracker|suivi paris sportifs|joueurs-info-service|gouvernement|cookie|connexion|accueil|bonus|cote totale|mise|gains?|cash\s*out|cashout|disponibles|compl[eé]ter mon pari|partager)/i;
+    const market=/^(résultat du match|resultat du match|vainqueur|1x2|double chance|les deux équipes|plus de|moins de|buts?|score|mi-temps|mi temps|t\. rég|t\. reg|handicap|corners?|cartons?|marqueur)/i;
+    const score=/\b\d{1,2}\s*[-–]\s*\d{1,2}\b/;
+    const oddLine=/^\s*\d{1,3}[.,]\d{2}\s*$/;
+    const selections=[];
+    for(let i=0;i<lines.length;i++){
+      let name=lines[i].replace(/^[•·\-]+\s*/,'').trim();
+      if(!name||bad.test(name)||noise.test(name)||score.test(name)||market.test(name)||oddLine.test(name))continue;
+      // La cote peut être 1 à 4 lignes plus loin, après le marché et/ou le score.
+      let oi=-1;
+      for(let j=i+1;j<Math.min(lines.length,i+6);j++){if(oddLine.test(lines[j])){oi=j;break}}
+      if(oi<0)continue;
+      const odd=toNum(lines[oi]);
+      if(odd<1.01||odd>100)continue;
+      // Eviter les titres et les noms de buteurs : le nom doit être proche de la cote et ne pas être une phrase longue.
+      if(name.length<2||name.length>60||/[€%:]/.test(name))continue;
+      if(/\d{1,3}[.,]\d{2}/.test(name))continue;
+      if(selections.some(x=>x.name.toLowerCase()===name.toLowerCase()))continue;
+      selections.push({name,odd});
+    }
+    // Pour les tickets multi, on privilégie les lignes qui ressemblent à des équipes/événements et on limite les faux positifs.
+    const cleaned=selections.filter((x)=>!market.test(x.name)&&!/^m\.?\s|^t\.?\s/i.test(x.name)).slice(0,20);
+    renderSelections(cleaned);
+    if(cleaned.length){
+      document.getElementById('betName').value=cleaned.map(x=>x.name).join(' + ');
+      if(totalOdd!==null)document.getElementById('odd').value=totalOdd.toFixed(2);
+    } else {
+      const fallback=lines.find(x=>/^[A-Za-zÀ-ÿ][A-Za-zÀ-ÿ0-9 +.'’&/()\-]{2,90}$/.test(x)&&!bad.test(x)&&!noise.test(x)&&!score.test(x));
+      if(fallback)document.getElementById('betName').value=fallback.slice(0,100);
+    }
+    if(gainValue!==null){const st=Number(document.getElementById('stake').value||0),od=Number(document.getElementById('odd').value||0);}
+    status.textContent=cleaned.length>1?`Capture analysée ✓ ${cleaned.length} sélections détectées. Vérifie puis choisis la catégorie.`:'Capture analysée ✓ Vérifie les champs puis choisis la catégorie.';
+    document.getElementById('modal').classList.add('show');toggleMart();
+  }catch(e){status.textContent='Impossible de lancer l’OCR. Vérifie ta connexion puis réessaie.';out.textContent='Erreur : '+e.message}
+}
+function renderSelections(arr){
+  const box=document.getElementById('selectionsBox'), list=document.getElementById('selectionsList'), sum=document.getElementById('ticketSummary');
+  if(!arr||!arr.length){box.classList.remove('show');list.innerHTML='';sum.textContent='';return}
+  box.classList.add('show'); list.innerHTML='';
+  arr.forEach((x,i)=>{const row=document.createElement('div');row.className='selectionRow';row.innerHTML=`<input class="selName" value="${escapeAttr(x.name)}"><input class="selOdd" type="number" step="0.01" value="${Number(x.odd).toFixed(2)}">`;list.appendChild(row)});
+  const total=arr.reduce((a,x)=>a*x.odd,1); sum.textContent=`${arr.length} sélection${arr.length>1?'s':''} détectée${arr.length>1?'s':''}. Produit des cotes : ${total.toFixed(2)}. La cote totale du ticket est conservée séparément.`;
+}
+function escapeAttr(s){return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
+
+function loadImage(file){return new Promise((resolve,reject)=>{const img=new Image();img.onload=()=>resolve(img);img.onerror=reject;img.src=URL.createObjectURL(file)})}
+function cleanOcr(t){
+  return t.replace(/\r/g,'').replace(/[|]/g,'I').replace(/\bGagn[eé]e\b/gi,'Gagné').replace(/\bGagne\b/gi,'Gagné').replace(/\s+€/g,' €').replace(/[ \t]+/g,' ').split('\n').map(x=>x.trim()).filter(Boolean).join('\n');
+}
+
+function clearAll(){if(confirm('Effacer tous les paris enregistrés sur cet appareil ?')){data=[];save();render()}}
+render();
+</script>
+</body>
+</html>
